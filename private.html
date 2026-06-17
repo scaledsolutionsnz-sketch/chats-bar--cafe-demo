@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Share Your Feedback | Chats Bar &amp; Cafe</title>
+<meta name="description" content="Tell the team at Chats Bar & Cafe how we can do better. Your feedback comes straight to us." />
+<meta name="theme-color" content="#211a14" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Albert+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav scrolled">
+  <a href="index.html" class="brand"><span class="mark">C</span> Chats Bar &amp; Cafe</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="index.html#contact">Find Us</a>
+    <a href="tel:+6433881566" class="btn btn-dark nav-phone">03 388 1566</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow light">We're listening</span>
+    <h1>Tell us how we can do better</h1>
+    <p>Thanks for being honest with us. Your feedback comes straight to the team — we read every message and use it to put things right.</p>
+  </div>
+</header>
+
+<section class="content">
+  <div class="wrap" style="max-width:640px">
+    <div class="form-card" id="formCard">
+      <h3>Your feedback</h3>
+      <p class="sub">This goes privately to the Chats team — not to a public page.</p>
+      <form action="https://formsubmit.co/chatsbar77@gmail.com" method="POST" id="fbForm">
+        <input type="hidden" name="_subject" value="Private feedback — Chats Bar & Cafe website" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <div class="field-row">
+          <div class="field"><label for="name">Your name</label><input type="text" id="name" name="name" required placeholder="Full name" /></div>
+          <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="you@email.com" /></div>
+        </div>
+        <div class="field">
+          <label for="rating">Your rating</label>
+          <input type="text" id="rating" name="rating" readonly value="" />
+        </div>
+        <div class="field"><label for="feedback">What happened?</label><textarea id="feedback" name="feedback" required placeholder="Tell us what let you down — and how we can make it right next time."></textarea></div>
+        <button type="submit" class="btn btn-primary">Send feedback</button>
+      </form>
+    </div>
+
+    <div class="form-card success-state" id="success">
+      <div class="check">✓</div>
+      <h3>Thank you</h3>
+      <p>Your feedback has been sent to the team. We genuinely appreciate you taking the time — we'll use it to do better.</p>
+      <div style="margin-top:22px"><a href="index.html" class="btn btn-outline">Back to home</a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:0;justify-content:center">
+      <span>© <span data-year></span> Chats Bar &amp; Cafe, Christchurch · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Pre-fill rating from URL
+  var params = new URLSearchParams(window.location.search);
+  var rating = params.get("rating");
+  var ratingField = document.getElementById("rating");
+  if (rating && /^[1-5]$/.test(rating)) {
+    var stars = "★".repeat(+rating) + "☆".repeat(5 - +rating);
+    ratingField.value = stars + "  (" + rating + " / 5)";
+  } else {
+    ratingField.value = "Not specified";
+  }
+
+  // FormSubmit AJAX so we can show inline success
+  var form = document.getElementById("fbForm");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    fetch("https://formsubmit.co/ajax/chatsbar77@gmail.com", {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: data
+    }).then(function () {
+      document.getElementById("formCard").style.display = "none";
+      document.getElementById("success").classList.add("show");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }).catch(function () {
+      // Fallback: submit normally
+      form.submit();
+    });
+  });
+
+  document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>

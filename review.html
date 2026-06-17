@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Leave a Review | Chats Bar &amp; Cafe</title>
+<meta name="description" content="Tell us how your visit to Chats Bar & Cafe went. Your feedback helps us keep getting better." />
+<meta name="theme-color" content="#211a14" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Albert+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav scrolled">
+  <a href="index.html" class="brand"><span class="mark">C</span> Chats Bar &amp; Cafe</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="index.html#contact">Find Us</a>
+    <a href="tel:+6433881566" class="btn btn-dark nav-phone">03 388 1566</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow light">Your feedback</span>
+    <h1>How was your visit?</h1>
+    <p>We'd love to know how we did. Tap a rating below — it only takes a moment and it genuinely helps the team.</p>
+  </div>
+</header>
+
+<section class="content">
+  <div class="wrap">
+    <div class="review-box">
+      <h2 style="font-size:1.7rem;margin-bottom:6px">Rate your experience</h2>
+      <p class="hint">Select a star rating to continue.</p>
+      <div class="star-pick" id="stars">
+        <button data-rating="1" aria-label="1 star">★</button>
+        <button data-rating="2" aria-label="2 stars">★</button>
+        <button data-rating="3" aria-label="3 stars">★</button>
+        <button data-rating="4" aria-label="4 stars">★</button>
+        <button data-rating="5" aria-label="5 stars">★</button>
+      </div>
+      <p class="hint" id="msg">Thanks for taking the time — we appreciate it.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:0;justify-content:center">
+      <span>© <span data-year></span> Chats Bar &amp; Cafe, Christchurch · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 4–5 stars → Google review; 1–3 stars → private feedback form
+  var GOOGLE_REVIEW_URL = "https://g.page/r/PLACEHOLDER";
+  document.querySelectorAll("#stars button").forEach(function (b) {
+    b.addEventListener("mouseenter", function () {
+      var r = +b.dataset.rating;
+      document.querySelectorAll("#stars button").forEach(function (x) {
+        x.classList.toggle("lit", +x.dataset.rating <= r);
+      });
+    });
+    b.addEventListener("click", function () {
+      var r = +b.dataset.rating;
+      if (r >= 4) { window.location.href = GOOGLE_REVIEW_URL; }
+      else { window.location.href = "private.html?rating=" + r; }
+    });
+  });
+  document.getElementById("stars").addEventListener("mouseleave", function () {
+    document.querySelectorAll("#stars button").forEach(function (x) { x.classList.remove("lit"); });
+  });
+  document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>
